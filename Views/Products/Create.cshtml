@@ -1,0 +1,47 @@
+@model Product
+
+
+@{
+
+}
+<div class="container mt-4">
+
+    <div class="card">
+        <div class="card-header">
+            <h5>
+                <i class="bi bi-plus-circle-fill"></i> اضافة منتج جديد
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+              @Html.AntiForgeryToken()
+
+              <div class="mb-3">
+                <label class="form-label">اسم المنتج</label>
+                <input type="text" asp-for="Name" placeholder="أدخل اسم المنتج" class="form-control" />
+              </div>
+
+               <div class="mb-3">
+                <label class="form-label">سعر المنتج</label>
+                <input type="number" asp-for="Price" placeholder="أدخل سعؤ المنتج" class="form-control" />
+              </div>
+
+               <div class="mb-3">
+                <label class="form-label">صورة المنتج</label>
+                <input type="text" asp-for="Images" placeholder="أدخل صورة المنتج" class="form-control" />
+              </div>
+
+              <div class="mb-3">
+               
+               <button class="btn btn-success px-4 fw-bload">حفظ المنتج</button>
+                
+              </div>
+            </form>
+        </div>
+    </div>
+
+   
+
+</div>
+
