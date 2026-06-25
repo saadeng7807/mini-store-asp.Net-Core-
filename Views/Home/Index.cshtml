@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Categories>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,7 +7,7 @@
     <h1 class="alert alert-info">الأقسام الرئيسية للمتجر </h1>
 
     <div class="row d-flex justify-content-center align-items-center">
-        @foreach(dynamic item in ViewBag.CategoriesList)
+        @foreach(var item in Model)
         {
             <dic class="col-md-4">
               <div class="card text-center h-100">

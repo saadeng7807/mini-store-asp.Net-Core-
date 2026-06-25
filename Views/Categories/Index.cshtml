@@ -1,16 +1,18 @@
 
-@model List<Product>
+@model List<Categories>
 
 @{
-     Layout="_DashboardLayout";
+    Layout="_DashboardLayout";
 }
- 
+
+
+
 <div class="container mt-4">
 
     <div class="card">
         <div class="card-header">
             <h5>
-                <i class="bi bi-plus-circle-fill"></i> اضافة منتج جديد
+                <i class="bi bi-plus-circle-fill"></i> اضافة فئة جديدة 
             </h5>
         </div>
 
@@ -19,23 +21,20 @@
               @Html.AntiForgeryToken()
 
               <div class="mb-3">
-                <label class="form-label">اسم المنتج</label>
-                <input type="text" name="Name" placeholder="أدخل اسم المنتج" class="form-control" />
+                <label class="form-label">اسم الفئة</label>
+                <input type="text" name="Name" placeholder="أدخل اسم الفئة" class="form-control" />
               </div>
 
                <div class="mb-3">
-                <label class="form-label">سعر المنتج</label>
-                <input type="number" name="Price" placeholder="أدخل سعر المنتج" class="form-control" />
+                <label class="form-label">الايقونة </label>
+                <input type="text" name="Icon" placeholder="أدخل كود الأيقونة" class="form-control" />
               </div>
 
-               <div class="mb-3">
-                <label class="form-label">صورة المنتج</label>
-                <input type="text" name="Images" placeholder="أدخل صورة المنتج" class="form-control" />
-              </div>
+             
 
               <div class="mb-3">
                
-               <button class="btn btn-success px-4 fw-bload">حفظ المنتج</button>
+               <button class="btn btn-success px-4 fw-bload">حفظ الفئة</button>
                <a asp-action="Index" class="btn btn-light">إلغاء وعودة</a>
                 
               </div>
@@ -52,8 +51,8 @@
              <thead>
                   <tr>
                     <td>#</td>
-                    <td>اسم المنتج</td>
-                    <td>سعر المنتج</td>
+                    <td>اسم الفئة</td>
+                    <td>أيقونة الفئة </td>
                     <td colspan="2">اجراء</td>
                   </tr>
              </thead>
@@ -72,7 +71,7 @@
                     <tr>
                         <td class="ps-4 fw-bload text-secandory">@item.Id</td>
                         <td class="ps-4 fw-bload text-secandory">@item.Name</td>
-                        <td class="ps-4 fw-bload text-secandory">@item.Price</td>
+                        <td class="ps-4 fw-bload text-secandory">@item.Icon</td>
                         <td> <a href="#"><i class="bi bi-pencil-square text-success"></i></a></td>
                         <td> <a href="#"><i class="bi bi-trash3 text-danger"></i></a></td>
                     </tr>
