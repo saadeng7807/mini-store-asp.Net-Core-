@@ -17,7 +17,17 @@
         <div class="card-body">
             <form asp-action="Create" method="post">
               @Html.AntiForgeryToken()
-
+                <div class="mb-3">
+                    <label class="form-label">اختر الفئة</label>
+                    <select class="form-select" name="CategoryId">
+                      @foreach(var item in ViewBag.categories)
+                      {
+                        <option value="@item.Id">
+                            @item.Name
+                        </option>
+                      }
+                    </select>
+                </div>
               <div class="mb-3">
                 <label class="form-label">اسم المنتج</label>
                 <input type="text" name="Name" placeholder="أدخل اسم المنتج" class="form-control" />
@@ -54,6 +64,7 @@
                     <td>#</td>
                     <td>اسم المنتج</td>
                     <td>سعر المنتج</td>
+                    <td>الفئة</td>
                     <td colspan="2">اجراء</td>
                   </tr>
              </thead>
@@ -73,8 +84,9 @@
                         <td class="ps-4 fw-bload text-secandory">@item.Id</td>
                         <td class="ps-4 fw-bload text-secandory">@item.Name</td>
                         <td class="ps-4 fw-bload text-secandory">@item.Price</td>
-                        <td> <a href="#"><i class="bi bi-pencil-square text-success"></i></a></td>
-                        <td> <a href="#"><i class="bi bi-trash3 text-danger"></i></a></td>
+                         <td class="ps-4 fw-bload text-secandory">@item.Categories.Name</td>
+                        <td> <a asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square text-success"></i></a></td>
+                        <td> <a  asp-action="Delete"  asp-route-id="@item.Id" onclick="return confirm('هل انت متأكد من الحذف')"><i class="bi bi-trash3 text-danger"></i></a></td>
                     </tr>
                 }
               }

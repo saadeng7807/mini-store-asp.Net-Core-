@@ -11,6 +11,8 @@ namespace mini_store.Models
 
         public string Icon { get; set; }
 
+        public virtual ICollection<Product> Products  { get; set; } = new List<Product>();
+
 
        
     }
