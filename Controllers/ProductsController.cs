@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using mini_store.Models;
 using mini_store.Data;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Cryptography.Pkcs;
 
 namespace mini_store.Controllers
 {
@@ -8,18 +10,34 @@ namespace mini_store.Controllers
     {
         private readonly AppDbContext _context  ;
 
-        public ProductsController(AppDbContext cn)
+        public readonly IWebHostEnvironment _webhostingEnvorment;
+
+        public ProductsController(AppDbContext cn, IWebHostEnvironment wse)
         {
             _context=cn;
+            _webhostingEnvorment=wse;
+
         }
          
            
            [Route("dashboard")]
-         public IActionResult Index()
+         public IActionResult Index(string searchTerm)
         {
-            var products=_context.products.ToList();  // Read All Products
+           
             var categories=_context.categories.ToList();
             ViewBag.categories=categories;
+
+            var Productquery=_context.products.AsQueryable();
+             
+             if(!string.IsNullOrEmpty(searchTerm))
+            {
+                Productquery=Productquery.Where(p=>p.Name.Contains(searchTerm));
+            }
+
+            
+             var products=Productquery.ToList();
+
+             ViewBag.CurrentSearch=searchTerm;
             return View(products);
         }
 
@@ -34,10 +52,55 @@ namespace mini_store.Controllers
 
          public IActionResult Create(Product product)
         {
-            _context.products.Add(product);  // insert into Products Table 
-            _context.SaveChanges();
+            
+            
+      
+            if(product.ImageFile !=null)
+            {
+                string UploadFloder=Path.Combine(_webhostingEnvorment.WebRootPath,"Images");
 
-            return RedirectToAction("Index");
+                if(!Directory.Exists(UploadFloder))
+                {
+                    Directory.CreateDirectory(UploadFloder);
+                }
+               
+                string extention=Path.GetExtension(product.ImageFile.FileName);
+                
+                string UniqueFileName=Guid.NewGuid().ToString() + extention;    
+
+                string Filepath=Path.Combine(UploadFloder,UniqueFileName)   ; 
+
+                product.Images= UniqueFileName ;
+                 ModelState.Remove(nameof(Product.Images));
+                using(var filestrame=new FileStream(Filepath,FileMode.Create))
+                {
+                    product.ImageFile.CopyTo(filestrame);
+                }
+
+
+            }
+            
+
+             foreach (var item in ModelState)
+{
+    foreach (var error in item.Value.Errors)
+    {
+        Console.WriteLine($"Field: {item.Key}");
+        Console.WriteLine($"Error: {error.ErrorMessage}");
+    }
+}
+        
+            if(ModelState.IsValid)
+            {
+                  _context.products.Add(product);  // insert into Products Table 
+                  _context.SaveChanges();
+
+                  return RedirectToAction("Index");
+            }
+           
+            ViewBag.categories=_context.categories.ToList();
+        
+            return View("Index",_context.products.ToList());
         }
 
        public IActionResult Delete(int id)

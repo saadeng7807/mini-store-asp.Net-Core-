@@ -36,7 +36,7 @@ public class HomeController : Controller
     [Route("list")]
     public IActionResult Products(int id)
     {
-        var filtered=_products.Where(p=> p.CategoryId==id).ToList();
+        var filtered=_context.products.Where(p=> p.CategoryId==id).ToList();
          ViewBag.Filtered=filtered;
         return View();
     }

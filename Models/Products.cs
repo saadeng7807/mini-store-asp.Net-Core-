@@ -7,23 +7,29 @@ namespace mini_store.Models
     {
         [Key]
         public int Id {get ; set;}
-
+        
+        [Required(ErrorMessage ="يجب ادخال اسم المنتج")]
+        [StringLength(20,ErrorMessage ="اسم المنتج طويل جداً ")]
         public string Name { get; set; }
 
-        public Decimal Price { get; set; }
+         [Required(ErrorMessage = "يجب إدخال السعر")]
+         [Range(0.01, 10000.00, ErrorMessage = "يجب أن يكون السعر بين 0.01 و 10000")]
+         public decimal Price { get; set; }
         
+        [Required(ErrorMessage ="يجب ادخال رابط الصورة ")]
         public string Images { get; set; }
 
-
+        [Required(ErrorMessage ="يجب ادخال رابط الصورة")]
         public int CategoryId {get ; set ;}  // Foreign Key 
      
-     
+        [NotMapped]
+        [Required(ErrorMessage ="يجب اختيار صورة")]
+        public IFormFile? ImageFile {get ; set ;} 
 
        [ForeignKey("CategoryId")]
-       public virtual Categories Categories{get;set;}
-
-       public virtual ICollection<Image> Image {get;set;}=new List<Image>();
-
+       public virtual Categories? Categories { get; set; }
+       
+         
     }
 
 

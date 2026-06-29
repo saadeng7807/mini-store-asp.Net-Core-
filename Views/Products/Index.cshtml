@@ -15,7 +15,7 @@
         </div>
 
         <div class="card-body">
-            <form asp-action="Create" method="post">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
               @Html.AntiForgeryToken()
                 <div class="mb-3">
                     <label class="form-label">اختر الفئة</label>
@@ -30,18 +30,25 @@
                 </div>
               <div class="mb-3">
                 <label class="form-label">اسم المنتج</label>
-                <input type="text" name="Name" placeholder="أدخل اسم المنتج" class="form-control" />
+                <input type="text" name="Name" placeholder="أدخل اسم المنتج" class="form-control"  />
+                <span asp-validation-for="@Model.First().Name" class="text-danger"></span>
               </div>
 
                <div class="mb-3">
                 <label class="form-label">سعر المنتج</label>
-                <input type="number" name="Price" placeholder="أدخل سعر المنتج" class="form-control" />
+                <input type="number" name="Price" step="0.01" value="0" placeholder="أدخل سعر المنتج" class="form-control"  />
+                <span asp-validation-for="@Model.First().Price" class="text-danger"></span>
               </div>
 
-               <div class="mb-3">
-                <label class="form-label">صورة المنتج</label>
-                <input type="text" name="Images" placeholder="أدخل صورة المنتج" class="form-control" />
-              </div>
+              <div class="mb-4">
+                    <label class="form-label fw-semibold">صورة المنتج المرفوعة</label>
+                    <input name="ImageFile" type="file" class="form-control" accept="image/*" />
+                    @if (Model != null && Model.Any())
+                    {   
+                        <span asp-validation-for="@Model.First().ImageFile" class="text-danger"></span>
+                    }
+                </div>
+
 
               <div class="mb-3">
                
@@ -58,12 +65,27 @@
 </div>
  <div class="card mt-5">
         <div class="card-body">
+          <div class="card mb-3 border-0 bg-light p-3 shadow-sm">
+            <form method="get" asp-action="Index" class="row g-3 align-items-end">
+                <div class="col-md-9">
+                    <label class="form-label small fw-bold text-secondary">ابحث باسم المنتج</label>
+                    <input type="text" name="searchTerm" value="@ViewBag.CurrentSearch" placeholder="اكتب اسم المنتج الذي تريد البحث عنه..." class="form-control" />
+                </div>
+                <div class="col-md-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">
+                        <i class="bi bi-search"></i> بحث
+                    </button>
+                    <a asp-action="Index"  class="btn btn-secondary">إلغاء</a>
+                </div>
+            </form>
+</div>
             <table class="table">
              <thead>
                   <tr>
                     <td>#</td>
                     <td>اسم المنتج</td>
                     <td>سعر المنتج</td>
+                     <td>صورة المنتج</td>
                     <td>الفئة</td>
                     <td colspan="2">اجراء</td>
                   </tr>
@@ -84,6 +106,9 @@
                         <td class="ps-4 fw-bload text-secandory">@item.Id</td>
                         <td class="ps-4 fw-bload text-secandory">@item.Name</td>
                         <td class="ps-4 fw-bload text-secandory">@item.Price</td>
+                         <td class="ps-4 fw-bload text-secandory">
+                          <img src="~/Images/@item.Images" width="50" height="50" class="rounded" style="object-fit: cover;" />
+                         </td>
                          <td class="ps-4 fw-bload text-secandory">@item.Categories.Name</td>
                         <td> <a asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square text-success"></i></a></td>
                         <td> <a  asp-action="Delete"  asp-route-id="@item.Id" onclick="return confirm('هل انت متأكد من الحذف')"><i class="bi bi-trash3 text-danger"></i></a></td>
