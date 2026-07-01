@@ -7,12 +7,12 @@ namespace mini_store.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;  // خاص بعملية تسجيل الدخول
+        private readonly SignInManager<ApplicationUser> _signInManager;  // خاص بعملية تسجيل الدخول
 
-         private readonly UserManager<IdentityUser> _userManager; 
+         private readonly UserManager<ApplicationUser> _userManager; 
 
         // 2. حقن الأدوات في المُشيّد (Constructor)
-        public AccountController(SignInManager<IdentityUser> signInManager,UserManager<IdentityUser> userManager) 
+        public AccountController(SignInManager<ApplicationUser> signInManager,UserManager<ApplicationUser> userManager) 
         {
             _signInManager = signInManager;
             _userManager = userManager; 
@@ -74,7 +74,7 @@ namespace mini_store.Controllers
             if(ModelState.IsValid)
             {
 
-                    IdentityUser user=new ApplicationUser
+                    ApplicationUser user=new ApplicationUser
                     {
                     
                     UserName=register.Email,
