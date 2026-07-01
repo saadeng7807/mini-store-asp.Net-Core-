@@ -8,5 +8,10 @@
 <data name="Dashboard" xml:space="preserve"><value>Dashboard</value></data>
 <data name="StoreSystem" xml:space="preserve"><value>Store System</value></data>
 <data name="ReportUsers" xml:space="preserve"><value>   Report Users    </value></data>
+<data name="AddNewProducts" xml:space="preserve"><value>Add New Products</value></data>
+<data name="SelectCategories" xml:space="preserve"><value>    Select Categories        </value></data>
+<data name="ProductName" xml:space="preserve"><value> Product Name  </value></data>
+<data name="MainDept" xml:space="preserve"><value>  Main Store Categories   </value></data>
+<data name="Store" xml:space="preserve"><value>  E-Commerce   </value></data>
 
 </root>

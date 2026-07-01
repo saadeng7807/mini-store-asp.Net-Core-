@@ -155,3 +155,11 @@ E:\mini-store\obj\Debug\net8.0\mini-store.genruntimeconfig.cache
 E:\mini-store\obj\Debug\net8.0\ref\mini_store.dll
 E:\mini-store\obj\Debug\net8.0\mini_store.Resources.SharedResource.ar.resources
 E:\mini-store\obj\Debug\net8.0\mini_store.Resources.SharedResource.en-US.resources
+E:\mini-store\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+E:\mini-store\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+E:\mini-store\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+E:\mini-store\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.UI.dll
+E:\mini-store\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Embedded.dll
+E:\mini-store\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+E:\mini-store\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+E:\mini-store\obj\Debug\net8.0\mini_store.MvcApplicationPartsAssemblyInfo.cs

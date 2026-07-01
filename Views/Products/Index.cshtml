@@ -1,4 +1,6 @@
-
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 @model List<Product>
 
 @{
@@ -10,7 +12,7 @@
     <div class="card">
         <div class="card-header">
             <h5>
-                <i class="bi bi-plus-circle-fill"></i> اضافة منتج جديد
+                <i class="bi bi-plus-circle-fill"></i>  @SharedLocalizer["AddNewProducts"]
             </h5>
         </div>
 
@@ -18,7 +20,7 @@
             <form asp-action="Create" method="post" enctype="multipart/form-data">
               @Html.AntiForgeryToken()
                 <div class="mb-3">
-                    <label class="form-label">اختر الفئة</label>
+                    <label class="form-label"> @SharedLocalizer["SelectCategories"]  </label>
                     <select class="form-select" name="CategoryId">
                       @foreach(var item in ViewBag.categories)
                       {
@@ -29,7 +31,7 @@
                     </select>
                 </div>
               <div class="mb-3">
-                <label class="form-label">اسم المنتج</label>
+                <label class="form-label"> @SharedLocalizer["ProductName"]   </label>
                 <input type="text" name="Name" placeholder="أدخل اسم المنتج" class="form-control"  />
                 <span asp-validation-for="@Model.First().Name" class="text-danger"></span>
               </div>

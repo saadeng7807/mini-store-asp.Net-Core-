@@ -2,7 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using mini_store.Data;
 using mini_store;
-
+using Microsoft.AspNetCore.Identity;
+using mini_store.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +19,14 @@ builder.Services.AddControllersWithViews()
  builder.Services.AddDbContext<AppDbContext>(Options=>Options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
  ));
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+
+ //////////////////////////////////
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+///////////
+/// 
+
+/////
 var supportedCultures = new[] { "ar", "en-US" };
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -27,12 +34,26 @@ options.SetDefaultCulture(supportedCultures[0]);
 options.AddSupportedCultures(supportedCultures);
 options.AddSupportedUICultures(supportedCultures);
 // إزالة مزود لغة المتصفح
-var browserLanguageProvider = options.RequestCultureProviders.OfType<Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider>()
-.FirstOrDefault();
-if (browserLanguageProvider != null)
+
+});
+///////////////////////
+/// 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => 
 {
-options.RequestCultureProviders.Remove(browserLanguageProvider);
-}
+    // تخفيف شروط كلمات المرور لتسهيل التجربة
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 4;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+
 });
 var app = builder.Build();
 
@@ -47,7 +68,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStaticFiles();

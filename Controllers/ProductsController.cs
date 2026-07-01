@@ -3,7 +3,8 @@ using mini_store.Models;
 using mini_store.Data;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Security.Cryptography.Pkcs;
-
+using Microsoft.AspNetCore.Authorization;
+using System.Runtime.CompilerServices;
 namespace mini_store.Controllers
 {
     public class ProductsController:Controller
@@ -21,6 +22,7 @@ namespace mini_store.Controllers
          
            
            [Route("dashboard")]
+           [Authorize]
          public IActionResult Index(string searchTerm)
         {
            
