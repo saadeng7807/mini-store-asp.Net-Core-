@@ -1,0 +1,87 @@
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+@model mini_store.Models.ProductDetails
+
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "إضافة تفاصيل المنتج";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-dark text-white p-3">
+                    <h5 class="mb-0">
+                        <i class="bi bi-file-earmark-plus-fill"></i> إضافة تفاصيل منتج جديد
+                    </h5>
+                </div>
+
+                <div class="card-body p-4">
+                    <form asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">اختر المنتج</label>
+                            <select class="form-select" name="ProductId" asp-for="ProductId">
+                                <option value="">-- اختر المنتج المراد إضافة تفاصيل له --</option>
+                                @if (ViewBag.Products != null)
+                                {
+                                    @foreach(var item in ViewBag.Products)
+                                    {
+                                        <option value="@item.Id">
+                                            @item.Name
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="ProductId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label fw-bold">وصف المنتج المفصل</label>
+                            <textarea asp-for="Description" rows="4" class="form-control" placeholder="اكتب وصفاً شاملاً ومميزات المنتج هنا..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="MadeIn" class="form-label fw-bold">بلد المنشأ</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                    <input asp-for="MadeIn" type="text" class="form-control" placeholder="مثال: اليابان، ألمانيا..." />
+                                </div>
+                                <span asp-validation-for="MadeIn" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="StockQuantity" class="form-label fw-bold">الكمية المتاحة في المخزن</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-boxes"></i></span>
+                                    <input asp-for="StockQuantity" type="number" class="form-control" min="0" max="10000" />
+                                </div>
+                                <span asp-validation-for="StockQuantity" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-success px-4 fw-bold">
+                                <i class="bi bi-check-circle"></i> حفظ التفاصيل
+                            </button>
+                            <a asp-controller="ProductsDetails" asp-action="Index" class="btn btn-light">
+                                إلغاء وعودة للمنتجات
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

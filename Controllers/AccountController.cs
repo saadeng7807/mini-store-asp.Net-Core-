@@ -57,7 +57,7 @@ namespace mini_store.Controllers
             await _signInManager.SignOutAsync();
             
             // توجيه المستخدم إلى الصفحة الرئيسية بعد تسجيل الخروج
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
        
         [HttpGet]
@@ -68,7 +68,7 @@ namespace mini_store.Controllers
 
 
      [HttpPost]
-
+      [ValidateAntiForgeryToken]
      public async Task<IActionResult> Register(RegisterViewModel  register)
         {
             if(ModelState.IsValid)
@@ -96,7 +96,7 @@ namespace mini_store.Controllers
 
 
            
-            return View(register);
+                   return View(register);
         }
 
         

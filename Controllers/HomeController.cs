@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using mini_store.Models;
 using mini_store.Data;
+using Microsoft.EntityFrameworkCore;
 namespace mini_store.Controllers;
 
 public class HomeController : Controller
@@ -41,14 +42,14 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Details(string name)
+    public IActionResult Details(int id)
     {
 
-         var filtered=_products.FirstOrDefault(p=> p.Name== name);
+         var filtered=_context.productDetails.Include(pd => pd.Product).FirstOrDefault(pd => pd.ProductId == id);
 
          ViewBag.Products=filtered;
 
-        return View();
+        return View(filtered);
     }
 
     public IActionResult Privacy()

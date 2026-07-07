@@ -26,6 +26,8 @@ namespace mini_store.Data
 
            public DbSet<Image> images {get;set;}
 
+        public DbSet<ProductDetails> productDetails {get;set;}
+
 
        
     }

@@ -1,0 +1,133 @@
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+@model List<mini_store.Models.ProductDetails>
+
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "تفاصيل المنتجات";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-dark text-white p-3 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-file-earmark-plus-fill"></i>&nbsp; تفاصيل المنتجات
+                    </h5>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-light text-dark">
+                            عدد المنتجات: @Model.Count
+                        </span>
+
+                        <a asp-controller="ProductsDetails"
+                           asp-action="Create"
+                           class="btn btn-sm btn-success">
+                            <i class="bi bi-plus-circle"></i> إضافة تفصيل جديد
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+
+                    @if (!Model.Any())
+                    {
+                        <div class="text-center text-muted py-5">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            <h5 class="fw-semibold">@SharedLocalizer["NoProductsAvailable"]</h5>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th><i class="bi bi-box-seam"></i> @SharedLocalizer["ProductName"]</th>
+                                        <th><i class="bi bi-card-text"></i> @SharedLocalizer["Description"]</th>
+                                        <th><i class="bi bi-geo-alt"></i> @SharedLocalizer["MadeIn"]</th>
+                                        <th class="text-center"><i class="bi bi-stack"></i> @SharedLocalizer["StockQuantity"]</th>
+                                        <th class="text-center">@SharedLocalizer["Actions"]</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="fw-semibold">@item.Product?.Name</td>
+
+                                            <td>
+                                                @if (!string.IsNullOrWhiteSpace(item.Description))
+                                                {
+                                                    @(item.Description!.Length > 40
+                                                        ? item.Description.Substring(0, 40) + "..."
+                                                        : item.Description)
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">—</span>
+                                                }
+                                            </td>
+
+                                            <td>@item.MadeIn</td>
+
+                                            <td class="text-center">
+                                                @if (item.StockQuantity <= 0)
+                                                {
+                                                    <span class="badge bg-danger">نفدت الكمية</span>
+                                                }
+                                                else if (item.StockQuantity <= 5)
+                                                {
+                                                    <span class="badge bg-warning text-dark">@item.StockQuantity (منخفضة)</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-success">@item.StockQuantity</span>
+                                                }
+                                            </td>
+
+                                            <td class="text-center">
+                                                <div class="d-flex justify-content-center gap-2">
+
+                                                    <a asp-controller="ProductsDetails"
+                                                       asp-action="Edit"
+                                                       asp-route-id="@item.Id"
+                                                       class="btn btn-sm btn-outline-primary">
+                                                        <i class="bi bi-pencil-square"></i> تعديل
+                                                    </a>
+
+                                                    <form asp-controller="ProductsDetails"
+                                                          asp-action="Delete"
+                                                          asp-route-id="@item.Id"
+                                                          method="post"
+                                                          onsubmit="return confirm('هل أنت متأكد من حذف هذا التفصيل؟');"
+                                                          class="d-inline">
+                                                        @Html.AntiForgeryToken()
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                            <i class="bi bi-trash"></i> حذف
+                                                        </button>
+                                                    </form>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

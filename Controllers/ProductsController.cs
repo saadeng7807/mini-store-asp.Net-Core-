@@ -25,7 +25,18 @@ namespace mini_store.Controllers
            [Authorize]
          public IActionResult Index(string searchTerm)
         {
-           
+             var CoustumersName=Request.Cookies["Costumers"];
+             var CourseName=Request.Cookies["Course"];
+             var OrderId=Request.Cookies["Order"];
+
+             string UsrName=HttpContext.Session.GetString("UsrName")??"غير موجود";
+
+             
+            Console.WriteLine("CoustumersName: " + CoustumersName);
+            Console.WriteLine("CourseName: " + CourseName);
+            Console.WriteLine("OrderId: " + OrderId);
+            Console.WriteLine("UsrName: " + UsrName);
+
             var categories=_context.categories.ToList();
             ViewBag.categories=categories;
 

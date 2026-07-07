@@ -13,4 +13,13 @@
 <data name="ProductName" xml:space="preserve"><value>اسم المنتج</value></data>
 <data name="MainDept" xml:space="preserve"><value> الأقسام الرئيسية للمتجر  </value></data>
 <data name="Store" xml:space="preserve"><value> المتجر الإليكتروني</value></data>
+<data name="ProductsDetails" xml:space="preserve"><value> تفاصيل المنتجات</value></data>
+<data name="NoProductsAvailable" xml:space="preserve"><value> لاتوجد تفاصيل لهذا المنتج   </value></data>
+<data name="Description" xml:space="preserve"><value> الوصف</value></data>
+<data name="MadeIn" xml:space="preserve"><value> بلد المنشأ</value></data>
+<data name="StockQuantity" xml:space="preserve"><value> الكمية</value></data>
+<data name="Actions" xml:space="preserve"><value> الإجراءات</value></data>
+<data name="Edit" xml:space="preserve"><value> تعديل</value></data>
+<data name="Delete" xml:space="preserve"><value> حذف</value></data>
+
 </root>

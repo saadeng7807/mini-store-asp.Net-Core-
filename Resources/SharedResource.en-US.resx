@@ -13,5 +13,14 @@
 <data name="ProductName" xml:space="preserve"><value> Product Name  </value></data>
 <data name="MainDept" xml:space="preserve"><value>  Main Store Categories   </value></data>
 <data name="Store" xml:space="preserve"><value>  E-Commerce   </value></data>
+<data name="ProductsDetails" xml:space="preserve"><value> Product Details </value></data>
+<data name="NoProductsAvailable" xml:space="preserve"><value> No Product Details available</value></data>
+<data name="Description" xml:space="preserve"><value> Description </value></data>
+<data name="MadeIn" xml:space="preserve"><value> Made In </value></data>
+<data name="StockQuantity" xml:space="preserve"><value> Stock Quantity </value></data>
+<data name="Actions" xml:space="preserve"><value> Actions </value></data>
+<data name="Edit" xml:space="preserve"><value> Edit </value></data>
+<data name="Delete" xml:space="preserve"><value> Delete </value></data>
+
 
 </root>
